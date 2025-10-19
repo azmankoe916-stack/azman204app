@@ -1,0 +1,54 @@
+import type { Metadata } from 'next';
+import './globals.css';
+import { Toaster } from '@/components/ui/toaster';
+import { Header } from '@/components/layout/header';
+import { FirebaseClientProvider } from '@/firebase/client-provider';
+import { Footer } from '@/components/layout/footer';
+import { ThemeProvider } from '@/components/layout/theme-provider';
+
+export const metadata: Metadata = {
+  title: 'AZMAN204',
+  description: 'Solusi Administrasi Konstruksi Digital',
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="id" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="font-body antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <FirebaseClientProvider>
+            <div className="flex min-h-screen w-full flex-col">
+              <Header />
+              <main className="flex flex-1 flex-col gap-4 bg-background p-4 md:gap-8 md:p-8">
+                {children}
+              </main>
+              <Footer />
+            </div>
+            <Toaster />
+          </FirebaseClientProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
